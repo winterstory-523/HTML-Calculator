@@ -1,0 +1,495 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calculator</title>
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            padding: 60px 40px;
+            margin: 0;
+            font: 400 18px / 1.555 -apple-system, BlinkMacSystemFont, Roboto, Open Sans,
+                Helvetica Neue, sans-serif;
+        }
+
+        p {
+            margin: 0;
+        }
+
+        input::placeholder {
+            color: rgba(0, 0, 0, 0.6);
+            transition: color 0.8s ease;
+        }
+
+        input:focus::placeholder {
+            color: transparent;
+        }
+
+        .container {
+            position: relative;
+            width: 100%;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .title {
+            font-size: 24px;
+            font-weight: bold;
+            font-style: normal;
+            line-height: 1.33;
+            text-align: center;
+            padding-bottom: 40px;
+        }
+
+        .main-container {
+            position: relative;
+            display: grid;
+            grid-template-columns: minmax(0px, 1fr);
+            gap: 40px;
+            transition: gap 0.2s;
+        }
+
+        .field {
+            margin-bottom: 32px;
+            text-align: left;
+            display: grid;
+            grid-template-rows: subgrid;
+            grid-row: span 3;
+            padding: 0px;
+            margin-top: 0px;
+        }
+
+        .field:not(:last-child) {
+            margin-bottom: 32px;
+        }
+
+        .field label {
+            display: flex;
+            align-items: flex-end;
+            grid-row: 1 / 1;
+            line-height: 20px;
+            margin-bottom: 8px;
+            font-size: 15px;
+            font-weight: bold;
+            color: rgb(17, 17, 17);
+        }
+
+        .field input {
+            padding: 10px 15px;
+            border-width: 1px;
+            border-radius: 4px;
+            font-style: normal;
+            font-weight: normal;
+            font-size: 15px;
+            line-height: 20px;
+            height: max-content;
+            border-color: rgba(0, 0, 0, 0);
+            background: rgba(17, 17, 17, 0.05);
+            color: rgb(17, 17, 17);
+            opacity: 1;
+            -webkit-transition: 0.5s;
+            transition: 0.5s;
+            outline: none;
+        }
+
+        .name_field {
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0px, 1fr));
+            gap: 16px;
+            margin-bottom: 32px;
+        }
+
+        .name_field label {
+            display: flex;
+            align-items: flex-end;
+            grid-row: 1 / 1;
+            line-height: 20px;
+            margin-bottom: 8px;
+            font-size: 15px;
+            font-weight: bold;
+            color: rgb(17, 17, 17);
+        }
+
+        .name_field input {
+            padding: 10px 15px;
+            border-width: 1px;
+            border-radius: 4px;
+            font-style: normal;
+            font-weight: normal;
+            font-size: 15px;
+            line-height: 20px;
+            height: max-content;
+            border-color: rgba(0, 0, 0, 0);
+            background: rgba(17, 17, 17, 0.05);
+            color: rgb(17, 17, 17);
+            opacity: 1;
+            -webkit-transition: 0.5s;
+            transition: 0.5s;
+            outline: none;
+            max-width: 100%;
+        }
+
+        .field input:focus {
+            border-color: rgb(25, 123, 255);
+        }
+
+        .cal-btn {
+            border-radius: 4px;
+            border-color: rgba(0, 0, 0, 0);
+            line-height: 1.32;
+            color: rgb(255, 255, 255);
+            font-family: inherit;
+            font-weight: bold;
+            font-size: 12px;
+            background-color: rgb(25, 123, 255);
+            border-width: 2px;
+            min-width: 100%;
+            margin-top: 8px;
+            padding: 8px 16px;
+            text-transform: uppercase;
+            transition: 0.5s;
+            cursor: pointer;
+        }
+
+        .cal-btn:hover {
+            background-color: rgb(50, 137, 252);
+        }
+
+        .join-btn {
+            border-radius: 4px;
+            border-color: rgba(0, 0, 0, 0);
+            line-height: 1.32;
+            color: rgb(255, 255, 255);
+            font-family: inherit;
+            font-weight: bold;
+            font-size: 15px;
+            background-color: rgb(25, 123, 255);
+            border-width: 2px;
+            min-width: 100%;
+            margin-top: 32px;
+            padding: 8px 20px;
+            cursor: pointer;
+        }
+
+        .join-btn:hover {
+            background-color: rgb(50, 137, 252);
+        }
+
+        .results__container {
+            height: fit-content;
+            display: flex;
+            flex-direction: column;
+            gap: 24px;
+            color: rgb(17, 17, 17);
+            background: rgb(247, 247, 247);
+            border-radius: 16px;
+            position: sticky;
+            top: 40px;
+            bottom: 40px;
+            padding: 40px;
+        }
+
+        .result {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .result__label {
+            font-size: 15px;
+            font-weight: bold;
+            font-style: normal;
+            text-transform: inherit;
+            text-align: inherit;
+            line-height: 20px;
+        }
+
+        .result__value {
+            font-size: 15px;
+            inset: 0px 0px 0px -8px;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .main__result {
+            font-size: 32px;
+            font-weight: bold;
+            font-style: normal;
+            text-transform: inherit;
+            text-align: inherit;
+            line-height: 40px;
+        }
+
+        .main__result__title {
+            font-size: 20px;
+            font-weight: bold;
+            font-style: normal;
+            text-transform: inherit;
+            text-align: inherit;
+            line-height: 26px;
+        }
+
+        @media (min-width: 583px) {
+            .main-container {
+                grid-template-columns: repeat(2, minmax(0px, 1fr));
+                gap: 24px;
+            }
+
+            .title {
+                font-size: 36px;
+            }
+        }
+
+        @media (min-width: 671px) {
+            .main-container {
+                gap: 32px;
+            }
+        }
+
+        @media (min-width: 759px) {
+            .main-container {
+                gap: 40px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <p class="title">How much more would you make at Kale?</p>
+        <div class="main-container">
+            <div>
+                <div class="name_field">
+                    <div>
+                        <label for="firstname">First Name</label>
+                        <input type="text" name="firstname" id="firstname" placeholder="kaley" value="">
+                    </div>
+                    <div>
+                        <label for="lastname">Last Name</label>
+                        <input type="text" name="lastname" id="lastname" placeholder="Agent" value="">
+                    </div>
+                </div>
+                <div class="field">
+                    <label for="email">Email</label>
+                    <input type="text" name="email" id="email" placeholder="kaley@kaleyagent.com" value="">
+                </div>
+                <div class="field">
+                    <label for="gross-commission">How much gross commission did you earn last year?</label>
+                    <input type="number" name="gross-commission" id="gross-commission" placeholder="$100,000" value="">
+                </div>
+                <div class="field">
+                    <label for="broker-take">What percentage does your broker take per transaction?</label>
+                    <input type="number" name="broker-take" id="broker-take" placeholder="30%" value="">
+                </div>
+                <div class="field">
+                    <label for="franchise-fee">What is your current franchise fee percentage?</label>
+                    <input type="number" name="franchise-fee" id="franchise-fee" placeholder="3%" value="">
+                </div>
+                <div class="field">
+                    <label for="office-desk">What total office, desk, technology fees, website, CRM, E&O fees do you
+                        pay each year?</label>
+                    <input type="number" name="office-desk" id="office-desk" placeholder="$1,200" value="">
+                </div>
+                <div class="field">
+                    <label for="transaction">How many sales transactions did you have last year?</label>
+                    <input type="number" name="transaction" id="transaction" placeholder="10" value="">
+                </div>
+                <button type="" onclick="calculation()" class="cal-btn">Calculate</button>
+            </div>
+            <div class="results__container" id="results" style="display: none;">
+                <div class="result">
+                    <span class="result__label">Current Firm</span>
+                    <span class="result__value counter" id="currentFirm" data-target="65800">0</span>
+                </div>
+                <div class="result">
+                    <span class="result__label">Our Firm</span>
+                    <span class="result__value counter" id="ourFirm" data-target="65800">0</span>
+                </div>
+                <div class="">
+                    <p class="main__result__title">You would have made an extra</p>
+                    <div class="main__result counter" id="extraResult" data-target="29303"><span>0</span></div>
+                </div>
+                <div class="result">
+                    <span class="result__label">Percentage Increase</span>
+                    <span class="result__value counter" id="percentage" data-target="44.53">0</span>
+                </div>
+                <button class="join-btn">Join Us Today</button>
+            </div>
+        </div>
+    </div>
+    <script>
+        document.getElementById("email").addEventListener("blur", function (event) {
+            var emailInput = document.getElementById("email");
+            var emailPattern = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,6}$/;
+
+            if (emailInput.value && !emailPattern.test(emailInput.value)) {
+                emailInput.style.borderColor = "red";
+                event.preventDefault();
+            } else {
+                emailInput.style.borderColor = "rgba(0, 0, 0, 0)";
+            }
+        });
+
+        function counterAnimation() {
+            const counters = document.querySelectorAll(".counter");
+
+            counters.forEach((counter) => {
+                counter.innerText = "0";
+
+                const updateCounter = () => {
+                    const target = +counter.getAttribute("data-target");
+
+                    let firstValue = "";
+
+                    if (counter.id === "percentage") {
+                        firstValue = counter.innerText
+                            .substring(0, counter.innerText.length - 1)
+                            .replace(/,/g, "");
+                    } else {
+                        firstValue = counter.innerText.substring(1).replace(/,/g, "");
+                    }
+
+                    const c = +firstValue;
+
+                    const increment = (target / 200).toFixed(2);
+
+                    let inner__value = "";
+
+                    if (c < target) {
+                        const temp = `${Math.ceil(c + Number(increment))}`;
+                        inner__value = temp.replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+                        setTimeout(updateCounter, 10);
+                    } else {
+                        const tempTarget = Math.ceil(target);
+                        inner__value = tempTarget
+                            .toString()
+                            .replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+                    }
+
+                    if (counter.id === "percentage") {
+                        counter.innerText = inner__value + "%";
+                    } else {
+                        counter.innerText = "$" + inner__value;
+                    }
+                };
+
+                updateCounter();
+            });
+        }
+
+        function calculation() {
+            const firstName = document.getElementById("firstname").value;
+            const lastName = document.getElementById("lastname").value;
+            const email = document.getElementById("email").value;
+            const grossCommission = Number(
+                document.getElementById("gross-commission").value
+            );
+            const brokerTake = Number(document.getElementById("broker-take").value);
+            const franchiseFee = Number(document.getElementById("franchise-fee").value);
+            const officeDesk = Number(document.getElementById("office-desk").value);
+            const transaction = Number(document.getElementById("transaction").value);
+
+            const formData = {
+                firstname: firstName,
+                lastname: lastName,
+                email: email,
+                "gross-commission": grossCommission,
+                "broker-take": brokerTake,
+                "franchise-fee": franchiseFee,
+                "office-desk": officeDesk,
+                transaction: transaction,
+            };
+
+            let isValid = true;
+
+            Object.keys(formData).forEach((key) => {
+                if (!formData[key]) {
+                    if (formData[key] === 0) {
+                        document.getElementById(key).style.borderColor = "rgba(0, 0, 0, 0);";
+                        return;
+                    }
+
+                    document.getElementById(key).style.borderColor = "#ff1a1a";
+                    isValid = false;
+                } else {
+                    document.getElementById(key).style.borderColor = "rgba(0, 0, 0, 0);";
+                }
+            });
+
+            if (!isValid) {
+                return;
+            }
+
+            const step1 = grossCommission * (1 - (franchiseFee + brokerTake) / 100);
+
+            const step2 = step1 - officeDesk;
+            const step3 = grossCommission - (400 - transaction) - 897;
+
+            document.getElementById("currentFirm").setAttribute("data-target", step1);
+            document.getElementById("ourFirm").setAttribute("data-target", step3);
+            document
+                .getElementById("extraResult")
+                .setAttribute("data-target", step3 - step1);
+            document
+                .getElementById("percentage")
+                .setAttribute("data-target", ((step3 - step1) / step3) * 100);
+
+            counterAnimation();
+
+            document.getElementById("results").style.display = "flex";
+
+            setTimeout(() => {
+                submitData();
+            }, 2500);
+        }
+
+        function submitData() {
+            const data = {
+                created_date: new Date(Date.now()).toLocaleDateString("en-US", {
+                    year: "numeric",
+                    month: "2-digit",
+                    day: "2-digit",
+                }),
+                firstname: document.getElementById("firstname").value,
+                lastname: document.getElementById("lastname").value,
+                email: document.getElementById("email").value,
+                gross_commission: document.getElementById("gross-commission").value,
+                broker_keeps: document.getElementById("broker-take").value,
+                franchis_fee: document.getElementById("franchise-fee").value,
+                other_annual_fee: document.getElementById("office-desk").value,
+                sales_transaction: document.getElementById("transaction").value,
+                current_firm: document.getElementById("currentFirm").innerHTML,
+                kale_take: document.getElementById("ourFirm").innerText,
+                amount: document.getElementById("extraResult").innerText,
+                percentage: document.getElementById("percentage").innerText,
+            };
+
+            fetch(
+                "https://script.google.com/macros/s/AKfycbz8FRXfMtF2TwF4YFg-Y8vVHwyVxnqwz9DF7mTyGVLaLfQnM-bp5qcEaqjkHcss2YOz/exec",
+                {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json",
+                    },
+                    body: JSON.stringify(data),
+                    mode: "no-cors",
+                }
+            )
+                .then((response) => console.log("response >>>", response))
+                .then((data) => {
+                    console.log("Success:", data);
+                })
+                .catch((error) => {
+                    console.log("Error:", error);
+                });
+        }
+
+    </script>
+</body>
+
+</html>

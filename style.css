@@ -1,0 +1,250 @@
+* {
+  box-sizing: border-box;
+}
+
+body {
+  padding: 60px 40px;
+  margin: 0;
+  font: 400 18px / 1.555 -apple-system, BlinkMacSystemFont, Roboto, Open Sans,
+    Helvetica Neue, sans-serif;
+}
+
+p {
+  margin: 0;
+}
+
+input::placeholder {
+  color: rgba(0, 0, 0, 0.6);
+  transition: color 0.8s ease;
+}
+
+input:focus::placeholder {
+  color: transparent;
+}
+
+.container {
+  position: relative;
+  width: 100%;
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.title {
+  font-size: 24px;
+  font-weight: bold;
+  font-style: normal;
+  line-height: 1.33;
+  text-align: center;
+  padding-bottom: 40px;
+}
+
+.main-container {
+  position: relative;
+  display: grid;
+  grid-template-columns: minmax(0px, 1fr);
+  gap: 40px;
+  transition: gap 0.2s;
+}
+
+.field {
+  margin-bottom: 32px;
+  text-align: left;
+  display: grid;
+  grid-template-rows: subgrid;
+  grid-row: span 3;
+  padding: 0px;
+  margin-top: 0px;
+}
+
+.field:not(:last-child) {
+  margin-bottom: 32px;
+}
+
+.field label {
+  display: flex;
+  align-items: flex-end;
+  grid-row: 1 / 1;
+  line-height: 20px;
+  margin-bottom: 8px;
+  font-size: 15px;
+  font-weight: bold;
+  color: rgb(17, 17, 17);
+}
+
+.field input {
+  padding: 10px 15px;
+  border-width: 1px;
+  border-radius: 4px;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 15px;
+  line-height: 20px;
+  height: max-content;
+  border-color: rgba(0, 0, 0, 0);
+  background: rgba(17, 17, 17, 0.05);
+  color: rgb(17, 17, 17);
+  opacity: 1;
+  -webkit-transition: 0.5s;
+  transition: 0.5s;
+  outline: none;
+}
+
+.name_field {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0px, 1fr));
+  gap: 16px;
+  margin-bottom: 32px;
+}
+
+.name_field label {
+  display: flex;
+  align-items: flex-end;
+  grid-row: 1 / 1;
+  line-height: 20px;
+  margin-bottom: 8px;
+  font-size: 15px;
+  font-weight: bold;
+  color: rgb(17, 17, 17);
+}
+
+.name_field input {
+  padding: 10px 15px;
+  border-width: 1px;
+  border-radius: 4px;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 15px;
+  line-height: 20px;
+  height: max-content;
+  border-color: rgba(0, 0, 0, 0);
+  background: rgba(17, 17, 17, 0.05);
+  color: rgb(17, 17, 17);
+  opacity: 1;
+  -webkit-transition: 0.5s;
+  transition: 0.5s;
+  outline: none;
+  max-width: 100%;
+}
+
+.field input:focus {
+  border-color: rgb(25, 123, 255);
+}
+
+.cal-btn {
+  border-radius: 4px;
+  border-color: rgba(0, 0, 0, 0);
+  line-height: 1.32;
+  color: rgb(255, 255, 255);
+  font-family: inherit;
+  font-weight: bold;
+  font-size: 12px;
+  background-color: rgb(25, 123, 255);
+  border-width: 2px;
+  min-width: 100%;
+  margin-top: 8px;
+  padding: 8px 16px;
+  text-transform: uppercase;
+  transition: 0.5s;
+  cursor: pointer;
+}
+
+.cal-btn:hover {
+  background-color: rgb(50, 137, 252);
+}
+
+.join-btn {
+  border-radius: 4px;
+  border-color: rgba(0, 0, 0, 0);
+  line-height: 1.32;
+  color: rgb(255, 255, 255);
+  font-family: inherit;
+  font-weight: bold;
+  font-size: 15px;
+  background-color: rgb(25, 123, 255);
+  border-width: 2px;
+  min-width: 100%;
+  margin-top: 32px;
+  padding: 8px 20px;
+  cursor: pointer;
+}
+
+.join-btn:hover {
+  background-color: rgb(50, 137, 252);
+}
+
+.results__container {
+  height: fit-content;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  color: rgb(17, 17, 17);
+  background: rgb(247, 247, 247);
+  border-radius: 16px;
+  position: sticky;
+  top: 40px;
+  bottom: 40px;
+  padding: 40px;
+}
+
+.result {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.result__label {
+  font-size: 15px;
+  font-weight: bold;
+  font-style: normal;
+  text-transform: inherit;
+  text-align: inherit;
+  line-height: 20px;
+}
+
+.result__value {
+  font-size: 15px;
+  inset: 0px 0px 0px -8px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.main__result {
+  font-size: 32px;
+  font-weight: bold;
+  font-style: normal;
+  text-transform: inherit;
+  text-align: inherit;
+  line-height: 40px;
+}
+
+.main__result__title {
+  font-size: 20px;
+  font-weight: bold;
+  font-style: normal;
+  text-transform: inherit;
+  text-align: inherit;
+  line-height: 26px;
+}
+
+@media (min-width: 583px) {
+  .main-container {
+    grid-template-columns: repeat(2, minmax(0px, 1fr));
+    gap: 24px;
+  }
+
+  .title {
+    font-size: 36px;
+  }
+}
+
+@media (min-width: 671px) {
+  .main-container {
+    gap: 32px;
+  }
+}
+
+@media (min-width: 759px) {
+  .main-container {
+    gap: 40px;
+  }
+}

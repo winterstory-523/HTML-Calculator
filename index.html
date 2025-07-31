@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calculator</title>
+    <link rel="stylesheet" href="./style.css">
+</head>
+
+<body>
+    <div class="container">
+        <p class="title">How much more would you make at Kale?</p>
+        <div class="main-container">
+            <div>
+                <div class="name_field">
+                    <div>
+                        <label for="firstname">First Name</label>
+                        <input type="text" name="firstname" id="firstname" placeholder="kaley" value="">
+                    </div>
+                    <div>
+                        <label for="lastname">Last Name</label>
+                        <input type="text" name="lastname" id="lastname" placeholder="Agent" value="">
+                    </div>
+                </div>
+                <div class="field">
+                    <label for="email">Email</label>
+                    <input type="text" name="email" id="email" placeholder="kaley@kaleyagent.com" value="">
+                </div>
+                <div class="field">
+                    <label for="gross-commission">How much gross commission did you earn last year?</label>
+                    <input type="number" name="gross-commission" id="gross-commission" placeholder="$100,000" value="">
+                </div>
+                <div class="field">
+                    <label for="broker-take">What percentage does your broker take per transaction?</label>
+                    <input type="number" name="broker-take" id="broker-take" placeholder="30%" value="">
+                </div>
+                <div class="field">
+                    <label for="franchise-fee">What is your current franchise fee percentage?</label>
+                    <input type="number" name="franchise-fee" id="franchise-fee" placeholder="3%" value="">
+                </div>
+                <div class="field">
+                    <label for="office-desk">What total office, desk, technology fees, website, CRM, E&O fees do you
+                        pay each year?</label>
+                    <input type="number" name="office-desk" id="office-desk" placeholder="$1,200" value="">
+                </div>
+                <div class="field">
+                    <label for="transaction">How many sales transactions did you have last year?</label>
+                    <input type="number" name="transaction" id="transaction" placeholder="10" value="">
+                </div>
+                <button type="" onclick="calculation()" class="cal-btn">Calculate</button>
+            </div>
+            <div class="results__container" id="results" style="display: none;">
+                <div class="result">
+                    <span class="result__label">Current Firm</span>
+                    <span class="result__value counter" id="currentFirm" data-target="65800">0</span>
+                </div>
+                <div class="result">
+                    <span class="result__label">Our Firm</span>
+                    <span class="result__value counter" id="ourFirm" data-target="65800">0</span>
+                </div>
+                <div class="">
+                    <p class="main__result__title">You would have made an extra</p>
+                    <div class="main__result counter" id="extraResult" data-target="29303"><span>0</span></div>
+                </div>
+                <div class="result">
+                    <span class="result__label">Percentage Increase</span>
+                    <span class="result__value counter" id="percentage" data-target="44.53">0</span>
+                </div>
+                <button class="join-btn">Join Us Today</button>
+            </div>
+        </div>
+    </div>
+    <!-- <script src="./script.js"></script> -->
+     <script src="./main_script.js"></script>
+</body>
+
+</html>
